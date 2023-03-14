@@ -1,0 +1,21 @@
+﻿@using MvcApp.Models
+@model Group
+
+<h2>Edit group</h2>
+
+<p>
+    Id course: @Model.COURSE_ID
+</p>
+
+<form asp-action="EditGroup" asp-controller="Home" asp-route-group_id="@Model.GROUP_ID" asp-route-course_id="@Model.COURSE_ID" method="post">
+    <p>
+        <label asp-for="NAME">NAME:</label>
+        <input type="text" asp-for="NAME" />
+    </p>
+    <p>
+        <input type="submit" value="SAVE" />
+    </p>
+    <p>
+        <input type="button" value="CANCEL" onclick="location.href='@Url.Action("GroupsOfCourse", "Home", new { id = Model.COURSE_ID })'" />
+    </p>
+</form>

@@ -1,6 +1,17 @@
-var builder = WebApplication.CreateBuilder(args);
-var app = builder.Build();
+using Microsoft.EntityFrameworkCore;
+using MvcApp.Models;
 
-app.MapGet("/", () => "Hello World!");
+var builder = WebApplication.CreateBuilder(args);
+
+string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
+
+builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(connection));
+builder.Services.AddControllersWithViews();
+var app = builder.Build();
+app.UseStaticFiles();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 app.Run();

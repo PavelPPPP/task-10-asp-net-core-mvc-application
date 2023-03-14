@@ -1,0 +1,41 @@
+﻿@using MvcApp.ViewModel
+@using MvcApp.Models
+@model GroupsOfCourseViewModel
+
+<h2>List Groups for course - @Model.Courses.First().NAME</h2>
+
+<p>
+    <a class="link__create" asp-action="CreateGroup" asp-controller="Home" asp-route-courseId="@Model.Courses.First().COURSE_ID">Add Group</a>
+</p>
+
+<div class="table">
+    <div class="t__row t__head">
+        <div class="t__col">NAME</div>
+    </div>
+    @foreach (var item in Model.Groups)
+    {
+        <div class="t__row">
+            <a class="t__row-link" asp-action="StudentsOfGroup" asp-controller="Home" asp-route-id="@item.GROUP_ID">
+                <div class="t__col">@item.NAME</div>
+            </a>
+            <div class="t__col t__col_edit">
+                <a class="link__edit" asp-action="EditGroup" asp-route-id="@item.GROUP_ID">Edit</a>
+            </div>
+            <div class="t__col">
+                <form asp-action="DeleteGroup" asp-controller="Home" asp-route-id="@item.GROUP_ID" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    }
+</div>
+<p>
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="GroupsOfCourse" asp-controller="Home" asp-route-page="@(Model.PageViewModel.PageNumber - 1)">Prev</a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="GroupsOfCourse" asp-controller="Home" asp-route-page="@(Model.PageViewModel.PageNumber + 1)">Next</a>
+    }
+</p>

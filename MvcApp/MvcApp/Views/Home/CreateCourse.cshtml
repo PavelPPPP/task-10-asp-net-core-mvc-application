@@ -1,0 +1,21 @@
+﻿@using MvcApp.Models
+@model Course
+
+<h2>Add course</h2>
+
+<form asp-action="CreateCourse" asp-controller="Home" method="post">
+    <p>
+        <label asp-for="NAME">NAME:</label>
+        <input type="text" asp-for="NAME" />
+    </p>
+    <p>
+        <label asp-for="DESCRIPTION">DESCRIPTION:</label>
+        <input type="text" asp-for="DESCRIPTION" />
+    </p>
+    <p>
+        <input type="submit" value="SAVE" />
+    </p>
+    <p>
+        <input type="button" value="CANCEL" onclick="location.href='@Url.Action("Index", "Home")'" />
+    </p>
+</form>
