@@ -2,10 +2,10 @@
 @using MvcApp.Models
 @model GroupsOfCourseViewModel
 
-<h2>List Groups for course - @Model.Courses.First().NAME</h2>
+<h2>List Groups for course - @Model.Course.NAME</h2>
 
 <p>
-    <a class="link__create" asp-action="CreateGroup" asp-controller="Home" asp-route-courseId="@Model.Courses.First().COURSE_ID">Add Group</a>
+    <a class="link__create" asp-action="CreateGroup" asp-controller="Home" asp-route-courseId="@Model.Course.COURSE_ID">Add Group</a>
 </p>
 
 <div class="table">

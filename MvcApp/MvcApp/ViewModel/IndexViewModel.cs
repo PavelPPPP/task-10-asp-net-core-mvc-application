@@ -4,9 +4,9 @@ namespace MvcApp.ViewModel
 {
     public class IndexViewModel
     {
-        public IEnumerable<Course> Courses { get; }
+        public IEnumerable<CourseModel> Courses { get; }
         public PageViewModel PageViewModel { get; }
-        public IndexViewModel(IEnumerable<Course> courses, PageViewModel viewModel)
+        public IndexViewModel(IEnumerable<CourseModel> courses, PageViewModel viewModel)
         {
             Courses = courses;
             PageViewModel = viewModel;

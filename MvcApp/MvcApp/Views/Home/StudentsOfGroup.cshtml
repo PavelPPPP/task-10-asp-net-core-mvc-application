@@ -1,17 +1,17 @@
 ﻿@using MvcApp.ViewModel
-@using MvcApp.Models
+@using Core.Entities
 @model StudentsOfGroupViewModel
 
 
-<h2>List students of gruop - @Model.Groups.First().NAME</h2>
+<h2>List students of gruop - @Model.Group.NAME</h2>
 
 <p>
-    <a class="link__create" asp-action="CreateStudent" asp-controller="Home" asp-route-groupId="@Model.Groups.First().GROUP_ID">Add Student</a>
+    <a class="link__create" asp-action="CreateStudent" asp-controller="Home" asp-route-groupId="@Model.Group.GROUP_ID">Add Student</a>
 </p>
 
 <div class="table">
     <div class="t__row t__head">
-        <div class="t__col">FIRST_NAME</div>
+        <div class="t__col">FULL_NAME</div>
         <div class="t__col">LAST_NAME</div>
     </div>
     @foreach (var item in Model.Students)

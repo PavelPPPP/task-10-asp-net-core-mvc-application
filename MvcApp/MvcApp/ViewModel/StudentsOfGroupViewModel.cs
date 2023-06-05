@@ -4,13 +4,13 @@ namespace MvcApp.ViewModel
 {
     public class StudentsOfGroupViewModel
     {
-        public IEnumerable<Group> Groups { get; }
-        public IEnumerable<Student> Students { get; }
+        public GroupModel Group { get; }
+        public IEnumerable<StudentModel> Students { get; }
         public PageViewModel PageViewModel { get; }
 
-        public StudentsOfGroupViewModel(IEnumerable<Group> groups, IEnumerable<Student> students, PageViewModel pageViewModel)
+        public StudentsOfGroupViewModel(GroupModel group, IEnumerable<StudentModel> students, PageViewModel pageViewModel)
         {
-            Groups = groups;
+            Group = group;
             Students = students;
             PageViewModel = pageViewModel;
         }
