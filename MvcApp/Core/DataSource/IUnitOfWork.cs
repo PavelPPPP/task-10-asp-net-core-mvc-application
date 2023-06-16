@@ -5,9 +5,9 @@ namespace Core.DataSource
 {
     public interface IUnitOfWork : IDisposable
     {
-        IRepository<Course> Courses { get; }
-        IRepository<Group> Groups { get; }
-        IRepository<Student> Students { get; }
+        ICourseRepository<Course> Courses { get; }
+        IGroupRepository<Group> Groups { get; }
+        IStudentRepository<Student> Students { get; }
 
         Task Save();
     }

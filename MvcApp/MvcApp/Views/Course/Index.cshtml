@@ -1,0 +1,44 @@
+﻿@using MvcApp.Models
+@using MvcApp.ViewModel
+@model IndexViewModel
+
+
+<h2>List courses</h2>
+
+<p>
+    <a class="link__create" asp-action="Create" asp-controller="Course">Add course</a>
+</p>
+
+<div class="table">
+    <div class="t__row t__head">
+        <div class="t__col">Name</div>
+        <div class="t__col">Description</div>
+    </div>
+    @foreach (var item in Model.Courses)
+    {
+        <div class="t__row">
+            <a class="t__row-link" asp-action="GroupsOfCourse" asp-controller="Group" asp-route-id="@item.CourseId">
+                <div class="t__col">@item.Name</div>
+                <div class="t__col">@item.Description</div>
+            </a>
+            <div class="t__col t__col_edit">
+                <a class="link__edit" asp-action="Edit" asp-controller="Course" asp-route-id="@item.CourseId">Edit</a>
+            </div>
+            <div class="t__col">
+                <form asp-action="Delete" asp-controller="Course" asp-route-Id="@item.CourseId" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    }
+</div>
+<p>
+    @if (Model.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="Index" asp-controller="Course" asp-route-page="@(Model.PageViewModel.PageNumber - 1)">Prev</a>
+    }
+    @if (Model.PageViewModel.HasNextPage)
+    {
+        <a asp-action="Index" asp-controller="Course" asp-route-page="@(Model.PageViewModel.PageNumber + 1)">Next</a>
+    }
+</p>

@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Core.Repositoties
 {
-    public class GroupRepository : IRepository<Group>
+    public class GroupRepository : IGroupRepository<Group>
     {
         private readonly SchoolContext _dbContext;
 
@@ -14,37 +14,103 @@ namespace Core.Repositoties
             _dbContext = schoolContext;
         }
 
-        public async Task<IEnumerable<Group>> GetAll()
+        public async Task<IEnumerable<TResult>> GetGroupsOfCourse<TResult>(int? courseId, Expression<Func<Group, TResult>> selector)
         {
-            return await _dbContext.Groups.Include(p => p.CourseId).ToListAsync();
+            if (courseId == null)
+            {
+                throw new ArgumentNullException(nameof(courseId));
+            }
+
+            if (selector is null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
+
+            var result = await _dbContext.Groups
+                .Where(g => g.CourseId == courseId)
+                .Select(selector)
+                .ToListAsync();
+
+            return result;
         }
 
-        public async Task<IEnumerable<Group>> GetWhere(Expression<Func<Group, bool>> predicate)
+        public async Task<Group> Get(int? groupId)
         {
-            return await _dbContext.Groups.Include(p => p.Students).Where(predicate).ToListAsync();
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+
+            var group = await _dbContext.Groups
+                .Where(g => g.Id == groupId)
+                .SingleOrDefaultAsync();
+
+            return group;
         }
 
-        public async Task<Group> Get(int? id)
+        public async Task<TResult> GetWithProjection<TResult>(int? groupId, Expression<Func<Group, TResult>> selector)
         {
-            var groups = await _dbContext.Groups.Include(p => p.Students).Where(c => c.Id == id).ToListAsync();
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
 
-            return groups.First();
+            if (selector is null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
+
+            var group = await _dbContext.Groups
+                .Where(c => c.Id == groupId)
+                .Select(selector)
+                .SingleOrDefaultAsync();
+
+            return group;
+        }
+
+        public async Task<Group> GetWithDetail(int? groupId)
+        {
+            if (groupId == null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+
+            var group = await _dbContext.Groups
+                .Include(p => p.Students)
+                .Where(c => c.Id == groupId)
+                .SingleOrDefaultAsync();
+
+            return group;
         }
 
         public async Task Create(Group group)
         {
+            if (group is null)
+            {
+                throw new ArgumentNullException(nameof(group));
+            }
+
             await _dbContext.Groups.AddAsync(group);
         }
 
         public void Update(Group group)
         {
+            if (group is null)
+            {
+                throw new ArgumentNullException(nameof(group));
+            }
+
             _dbContext.Groups.Update(group);
         }
 
         public void Delete(Group group)
         {
-            if (group != null)
-                _dbContext.Groups.Remove(group);
+            if (group is null)
+            {
+                throw new ArgumentNullException(nameof(group));
+            }
+
+            _dbContext.Groups.Remove(group);
         }
     }
 }

@@ -1,10 +1,26 @@
-﻿namespace MvcApp.Models
+﻿using System.Linq.Expressions;
+
+namespace MvcApp.Models
 {
     public class StudentModel
     {
-        public int STUDENT_ID { get; set; }
-        public int? GROUP_ID { get; set; }
-        public string FIRST_NAME { get; set; }
-        public string LAST_NAME { get; set; }
+        public int StudentId { get; set; }
+        public int? GroupId { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
+
+        public static Expression<Func<Core.Entities.Student, StudentModel>> StudentSelector
+        {
+            get
+            {
+                return student => new StudentModel()
+                {
+                    StudentId = student.Id,
+                    GroupId = student.GroupId,
+                    FirstName = student.StudentName.FirstName.Value,
+                    LastName = student.StudentName.LastName.Value                    
+                };
+            }
+        }
     }
 }

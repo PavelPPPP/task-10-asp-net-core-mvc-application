@@ -1,12 +1,36 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Linq.Expressions;
 
 namespace MvcApp.Models
 {
     public class CourseModel
     {
-        public int COURSE_ID { get; set; }
-        [Required]
-        public string NAME { get; set; } = null!;
-        public string? DESCRIPTION { get; set; }
+        public int CourseId { get; set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+
+        public static Expression<Func<Core.Entities.Course, CourseModel>> CourseSelector
+        {
+            get
+            {
+                return course => new CourseModel()
+                {
+                    CourseId = course.Id,
+                    Name = course.DataCourse.Name,
+                    Description = course.DataCourse.Description
+                };
+            }
+        }
+
+        public static Expression<Func<Core.Entities.Course, CourseModel>> CourseNameSelector
+        {
+            get
+            {
+                return course => new CourseModel()
+                {
+                    CourseId = course.Id,
+                    Name = course.DataCourse.Name
+                };
+            }
+        }
     }
 }

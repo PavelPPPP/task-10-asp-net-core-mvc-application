@@ -1,0 +1,27 @@
+﻿@using MvcApp.Models
+@model StudentModel
+
+<h2>Editing student</h2>
+
+<form asp-action="Edit" asp-controller="Student" asp-route-studentid="@Model.StudentId" asp-route-groupid="@Model.GroupId" method="post">
+    <p>
+        Id student: @Model.StudentId
+    </p>
+    <p>
+        Id group: @Model.GroupId
+    </p>
+    <p>
+        <label asp-for="FirstName">First name:</label>
+        <input type="text" asp-for="FirstName" />
+    </p>
+    <p>
+        <label asp-for="LastName">Last name:</label>
+        <input type="text" asp-for="LastName" />
+    </p>
+    <p>
+        <input type="submit" value="SAVE" />
+    </p>
+    <p>
+        <input type="button" value="CANCEL" onclick="location.href='@Url.Action("StudentsOfGroup", "Student", new { id = Model.GroupId })'" />
+    </p>
+</form>

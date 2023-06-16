@@ -11,24 +11,12 @@ namespace Core.Entities
 
         public Course(DataCourse dataCourse) : this()
         {
-            ValidateArguments(dataCourse);
-
-            DataCourse = dataCourse;
+            DataCourse = dataCourse ?? throw new ArgumentNullException(nameof(dataCourse));
         }
 
         public void Change(DataCourse dataCourse)
         {
-            ValidateArguments(dataCourse);
-
-            DataCourse = dataCourse;
-        }
-
-        private void ValidateArguments(DataCourse dataCourse)
-        {
-            if (dataCourse is null)
-            {
-                throw new ArgumentNullException(nameof(dataCourse));
-            }
+            DataCourse = dataCourse ?? throw new ArgumentNullException(nameof(dataCourse));
         }
     }
 }

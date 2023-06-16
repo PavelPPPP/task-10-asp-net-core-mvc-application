@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 
 namespace Core.Repositoties
 {
-    public class StudentRepository : IRepository<Student>
+    public class StudentRepository : IStudentRepository<Student>
     {
         private readonly SchoolContext _dbContext;
 
@@ -14,35 +14,88 @@ namespace Core.Repositoties
             _dbContext = schoolContext;
         }
 
-        public async Task<IEnumerable<Student>> GetAll()
+        public async Task<IEnumerable<TResult>> GetStudentsOfGroup<TResult>(int? groupId, Expression<Func<Student, TResult>> selector)
         {
-            return await _dbContext.Students.Include(p => p.GroupId).ToListAsync();
+            if (groupId is null)
+            {
+                throw new ArgumentNullException(nameof(groupId));
+            }
+
+            if (selector is null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
+
+            var result = await _dbContext.Students
+                .Where(s => s.GroupId == groupId)
+                .Select(selector)
+                .ToListAsync();
+
+            return result;
         }
 
-        public async Task<IEnumerable<Student>> GetWhere(Expression<Func<Student, bool>> predicate)
+        public async Task<Student> Get(int? studentId)
         {
-            return await _dbContext.Students.Include(p => p.Group).Where(predicate).ToListAsync();
+            if (studentId == null)
+            {
+                throw new ArgumentNullException(nameof(studentId));
+            }
+
+            var student = await _dbContext.Students
+                .Where(g => g.Id == studentId)
+                .SingleOrDefaultAsync();
+
+            return student;
         }
 
-        public async Task<Student> Get(int? id)
+        public async Task<TResult> GetWithProjection<TResult>(int? studentId, Expression<Func<Student, TResult>> selector)
         {
-            return await _dbContext.Students.FindAsync(id);
+            if (studentId == null)
+            {
+                throw new ArgumentNullException(nameof(studentId));
+            }
+
+            if (selector is null)
+            {
+                throw new ArgumentNullException(nameof(selector));
+            }
+
+            var student = await _dbContext.Students
+                .Where(s => s.Id == studentId)
+                .Select(selector)
+                .SingleOrDefaultAsync();
+
+            return student;
         }
 
         public async Task Create(Student student)
         {
+            if (student is null)
+            {
+                throw new ArgumentNullException(nameof(student));
+            }
+
             await _dbContext.Students.AddAsync(student);
         }
 
         public void Update(Student student)
         {
+            if (student is null)
+            {
+                throw new ArgumentNullException(nameof(student));
+            }
+
             _dbContext.Students.Update(student);
         }
 
         public void Delete(Student student)
         {
-            if (student != null)
-                _dbContext.Students.Remove(student);
+            if (student is null)
+            {
+                throw new ArgumentNullException(nameof(student));
+            }
+
+            _dbContext.Students.Remove(student);
         }
     }
 }

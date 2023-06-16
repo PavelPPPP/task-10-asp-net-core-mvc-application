@@ -1,4 +1,5 @@
 ﻿using Core.DataSource;
+using MvcApp.Services;
 
 namespace MvcApp
 {
@@ -13,6 +14,9 @@ namespace MvcApp
         public void Load()
         {
             _services.AddTransient<IUnitOfWork, EFUnitOfWork>();
+            _services.AddTransient<ICourseService, CourseService>();
+            _services.AddTransient<IGroupService, GroupService>();
+            _services.AddTransient<IStudentService, StudentService>();
         }
     }
 }

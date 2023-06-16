@@ -1,0 +1,25 @@
+﻿@using MvcApp.Models
+@model StudentModel
+
+<h2>Add student</h2>
+
+<p>
+    Id group: @ViewData["groupId"]
+</p>
+
+<form asp-action="Create" asp-controller="Student" asp-route-groupid="@ViewData["groupId"]" method="post">
+    <p>
+        <label asp-for="FirstName">First name:</label>
+        <input type="text" asp-for="FirstName" />
+    </p>
+    <p>
+        <label asp-for="LastName">Last name:</label>
+        <input type="text" asp-for="LastName" />
+    </p>
+    <p>
+        <input type="submit" value="SAVE" />
+    </p>
+    <p>
+        <input type="button" value="CANCEL" onclick="location.href='@Url.Action("StudentsOfGroup", "Student", new { id = ViewData["groupId"] })'" />
+    </p>
+</form>

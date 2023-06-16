@@ -13,52 +13,37 @@ namespace Core.DataSource
 
         public EFUnitOfWork(SchoolContext dbContext)
         {
-            if (dbContext is null)
-            {
-                throw new ArgumentNullException(nameof(dbContext));
-            }
+            _dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
 
-            _dbContext = dbContext;
+            _courseRepository = new CourseRepository(dbContext);
+            _groupRepository = new GroupRepository(dbContext);
+            _studentRepository = new StudentRepository(dbContext);
         }
 
-        public IRepository<Course> Courses
+        public ICourseRepository<Course> Courses
         {
             get
             {
-                if (_courseRepository == null)
-                {
-                    _courseRepository = new CourseRepository(_dbContext);
-                }
-
                 return _courseRepository;
             }
         }
 
-        public IRepository<Group> Groups
+        public IGroupRepository<Group> Groups
         {
             get
             {
-                if (_groupRepository == null)
-                {
-                    _groupRepository = new GroupRepository(_dbContext);
-                }
-
                 return _groupRepository;
             }
         }
 
-        public IRepository<Student> Students
+        public IStudentRepository<Student> Students
         {
             get
             {
-                if (_studentRepository == null)
-                {
-                    _studentRepository = new StudentRepository(_dbContext);
-                }
-
                 return _studentRepository;
             }
         }
+
 
         public async Task Save()
         {
