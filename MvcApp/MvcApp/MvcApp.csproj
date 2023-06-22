@@ -19,7 +19,6 @@
     <Folder Include="Controllers\" />
     <Folder Include="ViewModel\" />
     <Folder Include="Views\Home\" />
-    <Folder Include="Views\Shared\" />
     <Folder Include="wwwroot\css\" />
   </ItemGroup>
 

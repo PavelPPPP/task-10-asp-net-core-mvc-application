@@ -2,6 +2,11 @@
 @using Core.Entities
 @model StudentsOfGroupViewModel
 
+@{
+    ViewBag.ThisAction = "StudentsOfGroup";
+    ViewBag.ThisController = "Student";
+    ViewBag.PageViewModel = Model.PageViewModel;
+}
 
 <h2>List students of gruop - @Model.Group.Name</h2>
 
@@ -30,13 +35,5 @@
         </div>
     }
 </div>
-<p>
-    @if (Model.PageViewModel.HasPreviousPage)
-    {
-        <a asp-action="StudentsOfGroup" asp-controller="Student" asp-route-page="@(Model.PageViewModel.PageNumber - 1)">Prev</a>
-    }
-    @if (Model.PageViewModel.HasNextPage)
-    {
-        <a asp-action="StudentsOfGroup" asp-controller="Student" asp-route-page="@(Model.PageViewModel.PageNumber + 1)">Next</a>
-    }
-</p>
+
+@await Html.PartialAsync("_LayoutPagination")

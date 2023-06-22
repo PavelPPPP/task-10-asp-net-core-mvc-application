@@ -2,6 +2,12 @@
 @using MvcApp.Models
 @model GroupsOfCourseViewModel
 
+@{
+    ViewBag.ThisAction = "GroupsOfCourse";
+    ViewBag.ThisController = "Group";
+    ViewBag.PageViewModel = Model.PageViewModel;
+}
+
 <h2>List Groups for course - @Model.Course.Name</h2>
 
 <p>
@@ -29,13 +35,5 @@
         </div>
     }
 </div>
-<p>
-    @if (Model.PageViewModel.HasPreviousPage)
-    {
-        <a asp-action="GroupsOfCourse" asp-controller="Group" asp-route-page="@(Model.PageViewModel.PageNumber - 1)">Prev</a>
-    }
-    @if (Model.PageViewModel.HasNextPage)
-    {
-        <a asp-action="GroupsOfCourse" asp-controller="Group" asp-route-page="@(Model.PageViewModel.PageNumber + 1)">Next</a>
-    }
-</p>
+
+@await Html.PartialAsync("_LayoutPagination")

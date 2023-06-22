@@ -2,6 +2,11 @@
 @using MvcApp.ViewModel
 @model IndexViewModel
 
+@{
+    ViewBag.ThisAction = "Index";
+    ViewBag.ThisController = "Course";
+    ViewBag.PageViewModel = Model.PageViewModel;
+}
 
 <h2>List courses</h2>
 
@@ -32,13 +37,5 @@
         </div>
     }
 </div>
-<p>
-    @if (Model.PageViewModel.HasPreviousPage)
-    {
-        <a asp-action="Index" asp-controller="Course" asp-route-page="@(Model.PageViewModel.PageNumber - 1)">Prev</a>
-    }
-    @if (Model.PageViewModel.HasNextPage)
-    {
-        <a asp-action="Index" asp-controller="Course" asp-route-page="@(Model.PageViewModel.PageNumber + 1)">Next</a>
-    }
-</p>
+
+@await Html.PartialAsync("_LayoutPagination")

@@ -20,29 +20,11 @@ namespace Core.DataSource
             _studentRepository = new StudentRepository(dbContext);
         }
 
-        public ICourseRepository<Course> Courses
-        {
-            get
-            {
-                return _courseRepository;
-            }
-        }
+        public ICourseRepository<Course> Courses => _courseRepository;
 
-        public IGroupRepository<Group> Groups
-        {
-            get
-            {
-                return _groupRepository;
-            }
-        }
+        public IGroupRepository<Group> Groups => _groupRepository;
 
-        public IStudentRepository<Student> Students
-        {
-            get
-            {
-                return _studentRepository;
-            }
-        }
+        public IStudentRepository<Student> Students => _studentRepository; 
 
 
         public async Task Save()
@@ -50,7 +32,7 @@ namespace Core.DataSource
             await _dbContext.SaveChangesAsync();
         }
 
-        public virtual void Dispose(bool disposing)
+        protected virtual void Dispose(bool disposing)
         {
             if (!_disposed)
             {

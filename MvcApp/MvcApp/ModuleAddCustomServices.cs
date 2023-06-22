@@ -13,10 +13,10 @@ namespace MvcApp
 
         public void Load()
         {
-            _services.AddTransient<IUnitOfWork, EFUnitOfWork>();
-            _services.AddTransient<ICourseService, CourseService>();
-            _services.AddTransient<IGroupService, GroupService>();
-            _services.AddTransient<IStudentService, StudentService>();
+            _services.AddScoped<IUnitOfWork, EFUnitOfWork>();
+            _services.AddScoped<ICourseService, CourseService>();
+            _services.AddScoped<IGroupService, GroupService>();
+            _services.AddScoped<IStudentService, StudentService>();
         }
     }
 }
