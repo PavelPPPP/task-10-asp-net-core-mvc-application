@@ -16,7 +16,7 @@ var addedCustomServices = new ModuleAddCustomServices(builder.Services);
 
 string? connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
-builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(connection));
+builder.Services.AddDbContext<SchoolContext>(options => options.UseSqlServer(connection, b => b.MigrationsAssembly("MvcApp")));
 builder.Services.AddControllersWithViews();
 addedCustomServices.Load();
 
