@@ -1,0 +1,12 @@
+﻿
+
+<p>
+    @if (ViewBag.PageViewModel.HasPreviousPage)
+    {
+        <a asp-action="@ViewBag.ThisAction" asp-controller="@ViewBag.ThisController" asp-route-page="@(ViewBag.PageViewModel.PageNumber - 1)">Prev</a>
+    }
+    @if (ViewBag.PageViewModel.HasNextPage)
+    {
+        <a asp-action="@ViewBag.ThisAction" asp-controller="@ViewBag.ThisController" asp-route-page="@(ViewBag.PageViewModel.PageNumber + 1)">Next</a>
+    }
+</p>

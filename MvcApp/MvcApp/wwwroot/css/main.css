@@ -1,0 +1,45 @@
+* {
+    box-sizing: border-box;
+}
+
+a, ul, li {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+.table {
+    display: inline-block;
+}
+
+.t__row {
+    padding: 5px 0;
+    border-bottom: 1px solid #000;
+}
+
+.t__row-link {
+    display: inline-block;
+}
+
+.t__head {
+    font-weight: 600;
+    background-color: rgb(223, 223, 223);
+}
+
+.t__col {
+    display: inline-block;
+    min-width: 100px;
+    max-width: 200px;
+}
+
+.t__col_description {
+    width: 100px;
+}
+
+.t__col_edit, .t__col_delete {
+    min-width: 50px;
+}

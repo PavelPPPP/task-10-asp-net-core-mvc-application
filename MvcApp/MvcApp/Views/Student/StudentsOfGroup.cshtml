@@ -1,0 +1,39 @@
+﻿@using MvcApp.ViewModel
+@using Core.Entities
+@model StudentsOfGroupViewModel
+
+@{
+    ViewBag.ThisAction = "StudentsOfGroup";
+    ViewBag.ThisController = "Student";
+    ViewBag.PageViewModel = Model.PageViewModel;
+}
+
+<h2>List students of gruop - @Model.Group.Name</h2>
+
+<p>
+    <a class="link__create" asp-action="Create" asp-controller="Student" asp-route-groupId="@Model.Group.GroupId">Add Student</a>
+</p>
+
+<div class="table">
+    <div class="t__row t__head">
+        <div class="t__col">FULL_NAME</div>
+        <div class="t__col">LAST_NAME</div>
+    </div>
+    @foreach (var item in Model.Students)
+    {
+        <div class="t__row">
+            <div class="t__col">@item.FirstName</div>
+            <div class="t__col">@item.LastName</div>
+            <div class="t__col t__col_edit">
+                <a class="link__edit" asp-action="Edit" asp-route-id="@item.StudentId">Edit</a>
+            </div>
+            <div class="t__col">
+                <form asp-action="Delete" asp-controller="Student" asp-route-id="@item.StudentId" asp-route-groupId="@item.GroupId" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    }
+</div>
+
+@await Html.PartialAsync("_LayoutPagination")

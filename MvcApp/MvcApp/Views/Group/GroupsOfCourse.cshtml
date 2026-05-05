@@ -1,0 +1,39 @@
+﻿@using MvcApp.ViewModel
+@using MvcApp.Models
+@model GroupsOfCourseViewModel
+
+@{
+    ViewBag.ThisAction = "GroupsOfCourse";
+    ViewBag.ThisController = "Group";
+    ViewBag.PageViewModel = Model.PageViewModel;
+}
+
+<h2>List Groups for course - @Model.Course.Name</h2>
+
+<p>
+    <a class="link__create" asp-action="Create" asp-controller="Group" asp-route-courseId="@Model.Course.CourseId">Add Group</a>
+</p>
+
+<div class="table">
+    <div class="t__row t__head">
+        <div class="t__col">NAME</div>
+    </div>
+    @foreach (var item in Model.Groups)
+    {
+        <div class="t__row">
+            <a class="t__row-link" asp-action="StudentsOfGroup" asp-controller="Student" asp-route-id="@item.GroupId">
+                <div class="t__col">@item.Name</div>
+            </a>
+            <div class="t__col t__col_edit">
+                <a class="link__edit" asp-action="Edit" asp-route-id="@item.GroupId">Edit</a>
+            </div>
+            <div class="t__col">
+                <form asp-action="Delete" asp-controller="Group" asp-route-id="@item.GroupId" asp-route-courseId="@item.CourseId" method="post">
+                    <input type="submit" value="Delete">
+                </form>
+            </div>
+        </div>
+    }
+</div>
+
+@await Html.PartialAsync("_LayoutPagination")
